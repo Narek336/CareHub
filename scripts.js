@@ -1,97 +1,147 @@
-/**
- * Data Catalog Project Starter Code - SEA Stage 2
- *
- * This file is where you should be doing most of your work. You should
- * also make changes to the HTML and CSS files, but we want you to prioritize
- * demonstrating your understanding of data structures, and you'll do that
- * with the JavaScript code you write in this file.
- *
- * The comments in this file are only to help you learn how the starter code
- * works. The instructions for the project are in the README. That said, here
- * are the three things you should do first to learn about the starter code:
- * - 1 - Change something small in index.html or style.css, then reload your
- *    browser and make sure you can see that change.
- * - 2 - On your browser, right click anywhere on the page and select
- *    "Inspect" to open the browser developer tools. Then, go to the "console"
- *    tab in the new window that opened up. This console is where you will see
- *    JavaScript errors and logs, which is extremely helpful for debugging.
- *    (These instructions assume you're using Chrome, opening developer tools
- *    may be different on other browsers. We suggest using Chrome.)
- * - 3 - Add another string to the titles array a few lines down. Reload your
- *    browser and observe what happens. You should see a fourth "card" appear
- *    with the string you added to the array, but a broken image.
- *
- */
-
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
+const resources = [{
+		name: "LA Regional Food Bank",
+		type: "Food",
+		location: "Los Angeles",
+		hours: "Sat-Sun: 9am - 5pm",
+		image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlvfvIz2mzcXM5nVEfyT6dn3svAI-xKi2MC3or0u16EQqJ-lmR2PVf78L3y5McLtZg8MQ&usqp=CAU",
+		url: "https://www.lafoodbank.org/find-food/pantry-locator/"
+	},
+	{
+		name: "The Shower of Hope",
+		type: "Shower",
+		location: "Los Angeles",
+		hours: "Mon-thu: 9am - 3pm",
+		image: "https://pics.paypal.com/00/s/MDIyM2YyN2UtNmM0Zi00ZDc0LWE4ZGMtNTlhNjk1YmNlZjBi/file.PNG",
+		url: "https://www.theshowerofhope.org/locations"
+	},
+	{
+		name: "Los Angeles Homeless Services Authority",
+		type: "Shelter",
+		location: "Los Angeles",
+		hours: "Mon-Sun: 12pm - 12am",
+		image: "https://lancasterconnect.com/wp-content/uploads/2021/11/LAHSA.jpg",
+		url: "https://www.lahsa.org/portal/apps/find-a-shelter/map"
+	},
+	{
+		name: "Union Rescue Mission",
+		type: "Church",
+		location: "Los Angeles",
+		hours: "Mon-Sun: 12pm - 12am",
+		image: "https://urm.org/wp-content/themes/urm/images/logo-white.png",
+		url: "https://urm.org/"
+	},
+	{
+		name: "Los Angeles Mission",
+		type: "Church",
+		location: "Los Angeles",
+		hours: "Mon-Sun: 8am - 4:30pm",
+		image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKoSBdaI9tmNfZz8SEE-BnnS9iyf2lQs-1Adh1G5_2J8MvjnccSDAtH13njAY3Fynst14&usqp=CAU",
+		url: "https://losangelesmission.org/"
+	},
+	{
+		name: "San Fernando Valley Rescue Mission",
+		type: "Shelter",
+		location: "Northridge",
+		hours: "Mon - Fri: 8:30am - 5pm",
+		image: "https://www.erescuemission.org/wp-content/uploads/sites/12/2020/05/RMA-Logo-mobile162.png",
+		url: "https://locator.lacounty.gov/lac/Location/3175794/san-fernando-valley-rescue-mission"
+	},
 ];
-// Your final submission should have much more data than this, and
-// you should use more than just an array of strings to store it all.
 
-// This function adds cards the page to display the data in the array
-function showCards() {
-  const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  const templateCard = document.querySelector(".card");
+const searchInput = document.getElementById("search");
+const filterType = document.getElementById("filter-type");
 
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
+function filterResources() {
+	const searchTerm = searchInput.value.toLowerCase();
+	const selectedType = filterType.value;
 
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
-    }
+	const filtered = resources.filter(resource => {
+		const matchesType = selectedType === "all" || resource.type.toLowerCase() === selectedType.toLowerCase();
+		const matchesSearch = resource.name.toLowerCase().includes(searchTerm) || resource.location.toLowerCase().includes(searchTerm);
+		return matchesType && matchesSearch;
+	});
 
-    const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
-  }
+	displayCatalog(filtered);
 }
 
-function editCardContent(card, newTitle, newImageURL) {
-  card.style.display = "block";
+searchInput.addEventListener("input", filterResources);
+filterType.addEventListener("change", filterResources);
 
-  const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
+function displayCatalog(items) {
+	const container = document.getElementById("catalog");
+	container.innerHTML = "";
+	items.forEach((item, index) => {
+		const card = document.createElement("div");
+		card.className = "card";
+		card.innerHTML = `
+		<h2>${item.name}</h2>
+		<p><strong>Type:</strong> ${item.type}</p>
+		<p><strong>Location:</strong> ${item.location}</p>
+		<a href="${item.url}" target="_blank">Visit Website</a>`;
 
-  const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
+		card.addEventListener("click", (e) => {
+			if (e.target.tagName === "A") return;
+			openModal(item);
+		});
 
-  // You can use console.log to help you debug!
-  // View the output by right clicking on your website,
-  // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
+		container.appendChild(card);
+	});
 }
 
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modal-title");
+const modalLocation = document.getElementById("modal-location");
+const modalHours = document.getElementById("modal-hours");
+const modalImage = document.getElementById("modal-image");
+const closeButton = document.querySelector(".close-button");
 
-function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!"
-  );
+function openModal(item) {
+	modalTitle.textContent = item.name;
+	modalLocation.textContent = item.location;
+	modalHours.textContent = item.hours;
+	modalImage.src = item.image;
+	modal.style.display = "block";
 }
 
-function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
-  showCards(); // Call showCards again to refresh
-}
+closeButton.addEventListener("click", () => {
+	modal.style.display = "none";
+});
+
+window.addEventListener("click", (event) => {
+	if (event.target === modal) {
+		modal.style.display = "none";
+	}
+});
+
+displayCatalog(resources);
+
+const donationLinks = {
+	"donate-food": "https://secure.lafoodbank.org/site/Donation2?df_id=2541&mfc_pref=T&2541.donation=form1",
+	"donate-shower": "https://www.theshowerofhope.org/donate",
+	"donate-shelter": "https://sfvrescuemission.org/donate/"
+};
+
+Object.entries(donationLinks).forEach(([id, url]) => {
+const btn = document.getElementById(id);
+	if (btn) {
+		btn.addEventListener("click", (event) => {
+			event.preventDefault();
+			window.open(url, "_blank");
+		});
+	}
+});
+const veteranLinks = {
+	"veteran-va": "https://www.va.gov/homeless/",
+	"veteran-hvh": "https://www.va.gov/homeless/nchav/index.asp",
+	"veteran-usvets": "https://usvets.org/"
+};
+
+Object.entries(veteranLinks).forEach(([id, url]) => {
+const btn = document.getElementById(id);
+	if (btn) {
+		btn.addEventListener("click", (event) => {
+			event.preventDefault();
+			window.open(url, "_blank");
+		});
+	}
+});

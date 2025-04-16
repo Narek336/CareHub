@@ -1,31 +1,93 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
-    <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
-  </head>
-
-  <body>
-    <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+<html lang="en">
+<head>
+    <div class="contact-info">
+		<p>Email: <a href="mailto:help@homelesshub.org">help@homelesshub.org</a></p>
+		<p>Phone: <a href="tel:1234567890">(123) 456-7890</a></p>
+		<p>TTY: <a href="tel:711">711 (Hearing Impaired)</a></p>
+	</div>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>CareHub</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+		<img src="./logoH.png" alt="Homeless Hub Logo" class="logo" />
     </header>
-    <div id="card-container"></div>
-    <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-        </ul>
-      </div>
+    <h1>CareHub for Supporting the Homeless</h1>
+
+    <div class="controls">
+    <select id="filter-type">
+        <option value="all">All</option>
+        <option value="food">Food Banks</option>
+        <option value="shelter">Shelters</option>
+        <option value="church">Churches</option>
+        <option value="shower">Showers</option>
+    </select>
+    <input type="text" id="search" placeholder="Search by name or location..." />
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
+
+    <div id="catalog" class="catalog"></div>
+
+    <div id="donations" class="card" style="max-width: 600px; margin: 40px auto; text-align: center;">
+		<h2 style="margin-bottom: 15px; color: #2d3436;">Support Our Mission</h2>
+		<p style="margin-bottom: 20px; font-size: 1rem; line-height: 1.6;">If you'd like to help, consider donating. Every bit makes a difference.</p>
+		<ul style="list-style: none; padding: 0;">
+			<li style="margin-bottom: 10px;"><button id="donate-food" class="donate-btn">Donate to LA Food Bank</button></li>
+			<li style="margin-bottom: 10px;"><button id="donate-shower" class="donate-btn">Donate to Shower of Hope</button></li>
+			<li><button id="donate-shelter" class="donate-btn">Donate to SFV Rescue Mission</button></li>
+		</ul>
+	</div>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p><strong>Location:</strong> <span id="modal-location"></span></p>
+            <p><strong>Hours:</strong> <span id="modal-hours"></span></p>
+            <img id="modal-image" src="" alt="Resource Image" />
+        </div>
     </div>
-  </body>
+
+    <div id="veteran-services" class="card veteran-section">
+		<h2>Support for Our Veterans</h2>
+		<p>Veterans experiencing homelessness deserve our respect and support. Check out these organizations making a difference.</p>
+		<ul>
+			<li><button id="veteran-va" class="veteran-btn">VA Homeless Programs</button></li>
+			<li><button id="veteran-hvh" class="veteran-btn">Additional Help for Homeless Vets</button></li>
+			<li><button id="veteran-usvets" class="veteran-btn">Donate to U.S.VETS</button></li>
+		</ul>
+    </div>
+
+    <section id="faq-section">
+		<h2>Frequently Asked Questions</h2>
+		<div class="faq">
+			<h3>Who can use this resource hub?</h3>
+			<p>This site is built for anyone experiencing homelessness or looking to help those in need.</p>
+		</div>
+		<div class="faq">
+			<h3>Are the services listed free?</h3>
+			<p>Most services listed are free. Please click the links to learn more about each organization's offerings.</p>
+		</div>
+		<div class="faq">
+			<h3>How often is the information updated?</h3>
+			<p>We aim to keep it current, but always double-check by visiting the organization’s website.</p>
+		</div>
+		<div class="faq">
+			<h3>How can I donate to support these efforts?</h3>
+			<p>You can use the donate buttons above to contribute directly to the listed organizations.</p>
+		</div>
+    </section>
+
+	<footer>
+		<p>Contact us: <a href="mailto:help@homelesshub.org">help@homelesshub.org</a> | 
+			Phone: <a href="tel:1234567890">(123) 456-7890</a> | 
+			TTY: <a href="tel:711">711</a></p>
+			<p>&copy; 2025 Homeless Resource Hub</p>
+	</footer>
+
+	<script src="./scripts.js"></script>
+</body>
 </html>
